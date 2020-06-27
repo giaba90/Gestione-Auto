@@ -1,0 +1,117 @@
+.nascosto {
+    display: none;
+}
+
+.distanziatoreSociale {
+    height: 10px;
+    background-color: lightgray;
+}
+
+
+/* css tab garage*/
+
+span#select2-marche-container {
+    width: 200px;
+}
+
+span#select2-modelli-container {
+    width: 240px;
+}
+
+.breadcrumb {
+    font-weight: bold;
+    margin-top: 16px;
+    display: inline-block;
+    font-size: 22px;
+    font-family: SANS-SERIF;
+}
+
+span.descrizione {
+    background: #faffaa;
+    display: block;
+    width: max-content;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+
+/* Modal Css */
+
+
+/* The Modal (background) */
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+
+/* Modal Content */
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+
+/* The Close Button */
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input#datepicker {
+    height: calc(1.5em + .75rem + 2px);
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    width: 128px;
+    padding-left: 14px;
+}
+
+i.far.fa-calendar-alt {
+    position: relative;
+    left: -22px;
+}
+
+select#marche,
+select#modelli,
+div#div_cliente>select {
+    border: none;
+}
+
+select#marche:focus,
+select#modelli:focus,
+div#div_cliente>select:focus {
+    outline-color: transparent;
+}

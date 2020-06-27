@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- PAGINA INIZIALE CON 4 TAB SOPRA E CONTAINER SOTTO CHE CAMBIA -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Css Necessari -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- css x il calendario -->
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- Script Necessari -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <!-- Script Statici -->
+    <script src="./js/statico/classi.js"></script>
+    <script src="./js/statico/const.js"></script>
+    <script src="./js/statico/api.js"></script>
+    <!-- Dynamico -->
+    <script src="./js/dynamic/onLoad_script.js" defer></script>
+    <script src="./js/dynamic/nav_bar_script.js" defer></script>
+    <!-- Dinamico Riferito alle tab -->
+    <script src="./js/dynamic/tab/affitti_script.js" defer></script>
+    <script src="./js/dynamic/tab/clienti_script.js" defer></script>
+    <script src="./js/dynamic/tab/cassa_script.js" defer></script>
+    <script src="./js/dynamic/tab/garage_script.js" defer></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col mt-2">
+                <ul class="nav nav-tabs" id="nav-bar">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-affitti" onClick="onClickOfTab(event)" id="firstToSee">Affitti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-clienti" onClick="onClickOfTab(event)">Clienti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-cassa" onClick="onClickOfTab(event)">Cassa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-garage" onClick="onClickOfTab(event)">Garage</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container nascosto" id="tab-affitti">
+        <div class="row">
+            <div class="col col-8">
+                <span class="breadcrumb">Ti trovi in: Affitto</span>
+            </div>
+            <div class="col col-4">
+                <form name="form_page" style="margin-top: 26px;">
+                    <input type="text" placeholder="Cerca affitto" class="form-control" id="ricercaAffittoInput" onkeyup="cercaAffitto()">
+                </form>
+            </div>
+            <div class="col col-3">
+                <a href="affitto.html">
+                    <button class="btn btn-primary" onClick="nuovoAffitto()">Nuovo Affitto</button>
+                </a>
+            </div>
+        </div>
+        <div class="container distanziatoreSociale mt-4 mb-4"></div>
+        <div class="row">
+            <div class="col col-12">
+                <div class="row" id="affitti_Container">
+                    <div class="col-3 h4" id="affitti_Data">Data</div>
+                    <div class="col-4 h4" id="affitti_Cliente">Cliente</div>
+                    <div class="col-2 h4" id="affitti_Auto">Auto</div>
+                    <div class="col-1 h4" id="affitti_Elimina">Elim.</div>
+                    <div class="col-1 h4" id="affitti_Risquoti">Riscuoti</div>
+                </div>
+            </div>
+            <div class="col col-12" id="lista_affitti">
+                <div class="row" id="placeHolder">
+
+                </div>
+            </div>
+            <div class="col col-12" id="affitti_trovati">
+                <div class="row" id="placeholder">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container nascosto" id="tab-clienti">
+        <div class="row">
+            <div class="col col-8">
+                <span class="breadcrumb">
+                    Ti trovi in : Clienti
+                </span>
+            </div>
+            <div cla ss="col col-4">
+                <form name="form_page" style="margin-top:26px">
+                    <input type="text" placeholder="Cerca cliente" class="form-control" id="ricercaClienteInput" onkeyup="cercaCliente()">
+                </form>
+            </div>
+            <div class="col col-3">
+                <button class="btn btn-primary" onClick="nuovoCliente()" id="m">Nuovo Cliente</button>
+                <div id="myModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <form action="" onsubmit="return controllaSubmit()" name="formClienti" method="POST">
+                            <div class="form-group">
+                                <label>Nome e Cognome</label>
+                                <input type="text" class="form-text" name="nome">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-text" name="email">
+                            </div>
+                            <input type="submit" class="btn btn-success" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container distanziatoreSociale mt-4 mb-4"></div>
+        <div class="row row-header">
+            <div class="col col-4 h4">Nome</div>
+            <div class="col col-4 h4">Cognome</div>
+            <div class="col col-4 h4">Email</div>
+        </div>
+
+        <div class="container" id="lista_clienti">
+            <div class="row">
+                <!-- <div class="col col-4">Gianfranco</div>
+                <div class="col col-4">Frizzi</div>
+                <div class="col col-4">gianfranco_frizzi_98@gmail.com</div> -->
+            </div>
+        </div>
+        <div class="col col-12" id="clienti_trovati">
+            <div class="row">
+
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="container nascosto" id="tab-cassa">
+
+        <div class="row">
+            <div class="col col-8"><span class="breadcrumb">Ti trovi in: Cassa</span></div>
+            <div class="col-4 col">
+                <form style="margin-top:22px" name="form_page" _lpchecked="1">
+                    <input type="text" placeholder="Cerca Pratica" class="form-control" id="ricercaPraticaInput" onkeyup="cercaPratica()">
+                </form>
+            </div>
+
+        </div>
+        <div class="container distanziatoreSociale mt-4 mb-4"></div>
+        <div class="row row-header">
+            <div class="col-3 h4">Username</div>
+            <div class="col-3 h4">Data</div>
+            <div class="col-3 h4">Auto</div>
+            <div class="col-2 h4">TOT</div>
+            <div class="col-1 h4">Rimuovi</div>
+        </div>
+        <div class="row" id="placeHolder">
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+            <div class="col-2"></div>
+            <div class="col-1"></div>
+        </div>
+        <div class="col col-12" id="lista_cassa">
+        </div>
+    </div>
+
+    <div class="container nascosto" id="tab-garage">
+        <span class="breadcrumb">Ti trovi in: Garage</span>
+        <span class="descrizione">Visualizza le auto disponibili nel nostro garage</span>
+        <div class="container distanziatoreSociale mt-4 mb-4"></div>
+        <div class="row">
+            <div class="col col-12">
+                <!--*********************************** Esempio Di Select 2 *********************************** -->
+
+                <select class="js-example-basic-single" name="marche" id="marche" onchange="fillModelli(this)">
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-12">
+                <select class="js-example-basic-single" name="modelli" id="modelli">
+                    <option value="">Nessun modello selezionato</option>
+                </select>
+            </div>
+        </div>
+        <!--*********************************** Esempio Di Select 2 *********************************** -->
+    </div>
+    </div>
+</body>
+
+</html>
