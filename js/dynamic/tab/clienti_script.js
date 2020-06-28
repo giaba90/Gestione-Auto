@@ -32,15 +32,15 @@ function controllaSubmit() {
     if (nome === "" || email === "" && nome.includes(" ")) {
         alert("Campi Vuoti o mal Compilati!");
         return false;
-    }else{//Controllo su email (dev'essere diversa da quelle già esistenti)
+    } else { //Controllo su email (dev'essere diversa da quelle già esistenti)
         ListaClienti.array.forEach(element => {
-            if(email==element.mail) console.log("Email già registrata");
+            if (email == element.mail) console.log("Email già registrata");
             //Alert Email già registrata + return false
         })
     }
     //Obbligare l'inserimento dello spazio tra nome e cognome oppure creare...
     //... anche il campo cognome e aggiungerlo al nome
-    
+
     alert("Cliente inserito correttamente!");
     ListaClienti.insert(new Cliente(nome, email));
 }
@@ -57,7 +57,7 @@ function popolaListaClienti() {
                     <div class="col-4">${elemento.nome.split(' ')[0]}</div>
                     <div class="col-4">${elemento.nome.split(' ')[1]}</div>
                     <div class="col-3">${elemento.mail}</div>
-                    <div class="col-1"><button class="btn btn-danger" onclick="cancellaCliente(${elemento.mail})">X</button></div>
+                    <div class="col-1"><button class="btn btn-danger" onclick="cancellaCliente('${elemento.mail}')">X</button></div>
                 </div>`
     })
 
@@ -72,12 +72,12 @@ function cancellaCliente(mail) {
     alert("Cliente Rimosso");
 }
 
-function cercaCliente() { 
-    document.getElementById('lista_clienti').style.display=('none');//div di tutti i clienti
-    let clientiTrovati = document.getElementById('clienti_trovati');//div dei clienti trovati
-    let clienteCercato = document.getElementById('ricercaClienteInput').value;//valore ricercato
-    let clienteTrovato = '';//elemento/i del div affitti trovati
-    if(clienteCercato != undefined && clienteCercato != '') {
+function cercaCliente() {
+    document.getElementById('lista_clienti').style.display = ('none'); //div di tutti i clienti
+    let clientiTrovati = document.getElementById('clienti_trovati'); //div dei clienti trovati
+    let clienteCercato = document.getElementById('ricercaClienteInput').value; //valore ricercato
+    let clienteTrovato = ''; //elemento/i del div affitti trovati
+    if (clienteCercato != undefined && clienteCercato != '') {
         ListaClienti.array.forEach((elemento) => {
             if (elemento.mail.includes(clienteCercato)) {
                 clienteTrovato += `
@@ -85,14 +85,14 @@ function cercaCliente() {
                     <div class="col-4">${elemento.nome.split(' ')[0]}</div>
                     <div class="col-4">${elemento.nome.split(' ')[1]}</div>
                     <div class="col-3">${elemento.mail}</div>
-                    <div class="col-1"><button class="btn btn-danger" onclick="cancellaCliente(${elemento.mail})">X</button></div>
+                    <div class="col-1"><button class="btn btn-danger" onclick="cancellaCliente('${elemento.mail})'">X</button></div>
                 </div>`;
-                clientiTrovati.innerHTML=clienteTrovato;
-                
+                clientiTrovati.innerHTML = clienteTrovato;
+
             }
         });
-    }else {
-        document.getElementById('lista_clienti').style.display=('block');
-        clientiTrovati.innerHTML='';
-    }    
+    } else {
+        document.getElementById('lista_clienti').style.display = ('block');
+        clientiTrovati.innerHTML = '';
+    }
 }

@@ -6,12 +6,12 @@ function popolaListaAffitti() {
     // console.log(ListaAffitti.array);
     ListaAffitti.array.forEach(elemento => {
         tag += `<div class="row mb-2">
-        <div class="col-3">${elemento.dataInizio}</div>
+        <div class="col-3">${new Date(elemento.dataInizio).toDateString()}</div>
         <div class="col-2">${elemento.nomeCliente}</div>
         <div class="col-2">${elemento.email}</div>
         <div class="col-2">${elemento.marca} ${elemento.modello}</div>
-        <div class="col-1"><button class="btn btn-danger" onclick="cancellaAffitto(${elemento.idUnivoco})">X</button></div>
-        <div class="col-1"><button class="btn btn-success" onclick="riscuotiAffitto(${elemento.idUnivoco})">R</button></div>
+        <div class="col-1"><button class="btn btn-danger" onclick="cancellaAffitto(${elemento.id})">X</button></div>
+        <div class="col-1"><button class="btn btn-success" onclick="riscuotiAffitto(${elemento.id})">R</button></div>
     </div>`
     })
     let child = document.createElement('div');
@@ -40,17 +40,18 @@ function riscuotiAffitto(id) {
     ///////RIMUOVI//////
     ListaAffitti.remove(id);
     popolaListaAffitti();
-    ////////////////////
+    ///////INSERISCI////
+    popolaListaCassa();
 
     alert("Affitto Spostato in cassa");
 }
 
-function cercaAffitto() { 
-    document.getElementById('lista_affitti').style.display=('none');//div di tutti gli affitti
-    let affittiTrovati = document.getElementById('affitti_trovati');//div degli affitti trovati
-    let affittoCercato = document.getElementById('ricercaAffittoInput').value;//valore ricercato
-    let affittoTrovato = '';//elemento/i del div affitti trovati
-    if(affittoCercato != undefined && affittoCercato != '') {
+function cercaAffitto() {
+    document.getElementById('lista_affitti').style.display = ('none'); //div di tutti gli affitti
+    let affittiTrovati = document.getElementById('affitti_trovati'); //div degli affitti trovati
+    let affittoCercato = document.getElementById('ricercaAffittoInput').value; //valore ricercato
+    let affittoTrovato = ''; //elemento/i del div affitti trovati
+    if (affittoCercato != undefined && affittoCercato != '') {
         ListaAffitti.array.forEach((elemento) => {
             if (elemento.email.includes(affittoCercato)) {
                 affittoTrovato += `
@@ -62,13 +63,13 @@ function cercaAffitto() {
                     <div class="col-1"><button class="btn btn-danger" onclick="cancellaAffitto(${elemento.idUnivoco})">X</button></div>
                     <div class="col-1"><button class="btn btn-success" onclick="riscuotiAffitto(${elemento.idUnivoco})">R</button></div>
                 </div>`;
-                affittiTrovati.innerHTML=affittoTrovato;
-                
+                affittiTrovati.innerHTML = affittoTrovato;
+
             }
         });
-        
-    }else {
-        document.getElementById('lista_affitti').style.display=('block');
-        affittiTrovati.innerHTML='';
-    }    
+
+    } else {
+        document.getElementById('lista_affitti').style.display = ('block');
+        affittiTrovati.innerHTML = '';
+    }
 }

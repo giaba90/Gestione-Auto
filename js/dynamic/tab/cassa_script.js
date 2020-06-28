@@ -7,7 +7,7 @@ function popolaListaCassa() {
         console.log(elemento);
         tag += `<div class="row mb-2">
                     <div class="col-3">${elemento.affitto.email}</div>
-                    <div class="col-3">${elemento.dataFineAffitto}</div>
+                    <div class="col-3">${new Date(elemento.dataFineAffitto).toDateString()}</div>
                     <div class="col-3">${elemento.modelloName}</div>
                     <div class="col-2">${getPrezzoFinale(elemento.affitto.dataInizio,elemento.dataFineAffitto,elemento.affitto.costoGiornaliero)}</div>
                     <div class="col-1"><button class="btn btn-danger" onclick="cancellaCassa(${elemento.id})">X</button></div>
