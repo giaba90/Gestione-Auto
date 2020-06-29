@@ -242,15 +242,15 @@ const ListaCassa = {
     },
 
     remove: (id) => {
-        let affitto;
+        let cassa;
         ListaCassa.array = ListaCassa.array.filter((elemento) => {
             if (elemento.id === id) {
-                affitto = elemento;
+                cassa = elemento;
             }
             return elemento.id !== id
         });
-        ListaClienti.removeAffittoAttivo(affitto.email);
-        ListaGarage.removeAffitata(affitto.marcaId, affitto.modelloId);
+        ListaClienti.removeAffittoAttivo(cassa.affitto.email);
+        ListaGarage.removeAffitata(cassa.affitto.marcaId, cassa.affitto.modelloId);
         LS.saveCassa();
     },
 
