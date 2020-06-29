@@ -7,6 +7,16 @@
     background-color: lightgray;
 }
 
+.logout a {
+    color: red;
+}
+
+
+/* 
+div#tab-affitti {
+    border: 1px solid #ddd;
+} */
+
 
 /* css tab garage*/
 
@@ -16,6 +26,22 @@ span#select2-marche-container {
 
 span#select2-modelli-container {
     width: 240px;
+}
+
+span.select2.select2-container.select2-container--default {
+    margin-top: 20px;
+}
+
+span.select2.select2-container.select2-container--default.select2-container--focus {
+    margin-top: 20px;
+}
+
+span#tot-auto {
+    font-weight: bold;
+}
+
+span#auto-prenotate {
+    font-weight: bold;
 }
 
 .breadcrumb {
@@ -114,4 +140,19 @@ select#marche:focus,
 select#modelli:focus,
 div#div_cliente>select:focus {
     outline-color: transparent;
+}
+
+
+/* css tab garage*/
+
+span#select2-marche-container {
+    width: 200px;
+}
+
+span#select2-modelli-container {
+    width: 240px;
+}
+
+span.select2.select2-container.select2-container--default {
+    margin-top: 20px;
 }

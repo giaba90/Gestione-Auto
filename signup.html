@@ -21,22 +21,23 @@
                 <form action="index.html" method="POST" name="form_page" onsubmit="return Controlla()" accept-charset="UTF-8">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" name="email" aria-describedby="email" placeholder="Enter email">
+                        <input required type="email" class="form-control" name="email" aria-describedby="email" placeholder="Enter email">
                         <small id="email" class="form-text text-muted">We'll never share your email with anyone
                             else.</small>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input required type="password" class="form-control" name="password" placeholder="Password">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Conferma Password</label>
-                        <input type="password" class="form-control" name="c_password" placeholder="Password">
+                        <input required type="password" class="form-control" name="c_password" placeholder="Password">
                     </div>
                     <div class="form-group">
                         <label for="exampleSelect">Tipologia</label>
-                        <select class="form-control">
+                        <select class="form-control" id="selectAdmin">
                             <option value="1">Admin</option>
+                            <option value="0">User</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

@@ -8,12 +8,15 @@
     <title>Document</title>
     <!-- Css Necessari -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <!-- css x il calendario -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
     <link rel="stylesheet" href="./css/style.css">
     <!-- Script Necessari -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
     <!-- Script Statici -->
@@ -22,18 +25,20 @@
     <script src="./js/statico/api.js"></script>
     <script src="./js/dynamic/cookieCheck.js"></script>
     <!-- Dynamico -->
-    <script src="./js/dynamic/onLoad_script.js" defer></script>
+
     <script src="./js/dynamic/nav_bar_script.js" defer></script>
     <!-- Dinamico Riferito alle tab -->
     <script src="./js/dynamic/tab/affitti_script.js" defer></script>
     <script src="./js/dynamic/tab/clienti_script.js" defer></script>
     <script src="./js/dynamic/tab/cassa_script.js" defer></script>
     <script src="./js/dynamic/tab/garage_script.js" defer></script>
+
+    <script src="./js/dynamic/onLoad_script.js" defer></script>
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="container" style="padding: 0;">
         <div class="row">
             <div class="col mt-2">
                 <ul class="nav nav-tabs" id="nav-bar">
@@ -49,11 +54,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#tab-garage" onClick="onClickOfTab(event)">Garage</a>
                     </li>
+                    <li class="logout">
+                        <a class="nav-link" href="logout.html">Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 
+    <div class="container distanziatoreSociale mt-4 mb-4"></div>
 
     <div class="container nascosto" id="tab-affitti">
         <div class="row">
@@ -71,15 +80,31 @@
                 </a>
             </div>
         </div>
-        <div class="container distanziatoreSociale mt-4 mb-4"></div>
+        <div id="myModalAffitti" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form action="" name="formAffitti" method="POST" onsubmit="riscuotiAffitto()">
+                    <div class="form-group ">
+                        <input type="hidden" name="id">
+                        <label for="data">Data affitto</label>
+                        <br>
+                        <!-- Per prendere il valore dataScelta = document.getElementsByName('dataaffitto')[0].value -->
+                        <input type="text" id="datepicker" name="dataaffitto"><i class="far fa-calendar-alt"></i>
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Invia">
+                </form>
+            </div>
+        </div>
         <div class="row">
             <div class="col col-12">
                 <div class="row" id="affitti_Container">
-                    <div class="col-3 h4" id="affitti_Data">Data</div>
-                    <div class="col-4 h4" id="affitti_Cliente">Cliente</div>
-                    <div class="col-2 h4" id="affitti_Auto">Auto</div>
-                    <div class="col-1 h4" id="affitti_Elimina">Elim.</div>
-                    <div class="col-1 h4" id="affitti_Risquoti">Riscuoti</div>
+                    <div class="col-3 col-md-3 h4" id="affitti_Data">Data Affitto</div>
+                    <div class="col-3 col-md-3 h4" id="affitti_Cliente">Cliente</div>
+                    <div class="col-2 col-md-2 h4" id="affitti_Email">Email</div>
+                    <div class="col-2 col-md-2 h4" id="affitti_Auto">Auto</div>
+                    <div class="col-6 col-md-1 h4" id="affitti_Elimina">Elimina</div>
+                    <div class="col-6 col-md-1 h4" id="affitti_Riscuoti">Riscuoti</div>
                 </div>
             </div>
             <div class="col col-12" id="lista_affitti">
@@ -95,28 +120,31 @@
         </div>
     </div>
 
-    <div class="container nascosto" id="tab-clienti">
+    <div class="container nascosto " id="tab-clienti">
         <div class="row">
             <div class="col col-8">
                 <span class="breadcrumb">
                     Ti trovi in : Clienti
                 </span>
             </div>
-            <div cla ss="col col-4">
+            <div class="col col-4 ">
                 <form name="form_page" style="margin-top:26px">
-                    <input type="text" placeholder="Cerca mail" class="form-control" id="ricercaClienteInput" onkeyup="cercaCliente()">
+                    <input type="text" placeholder="Cerca mail " class="form-control" id="ricercaClienteInput" onkeyup="cercaCliente()">
                 </form>
             </div>
-            <div class="col col-3">
+            <div class="col col-3 ">
                 <button class="btn btn-primary" onClick="nuovoCliente()" id="m">Nuovo Cliente</button>
-                <div id="myModal" class="modal">
+                <div id="myModalClienti" class="modal">
                     <!-- Modal content -->
                     <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <form action="" onsubmit="return controllaSubmit()" name="formClienti" method="POST">
+                        <form action=" " onsubmit="return controllaSubmit()" name="formClienti" method="POST">
                             <div class="form-group">
-                                <label>Nome e Cognome</label>
+                                <label>Nome</label>
                                 <input type="text" class="form-text" name="nome">
+                            </div>
+                            <div class="form-group">
+                                <label>Cognome</label>
+                                <input type="text" class="form-text" name="cognome">
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
@@ -137,9 +165,9 @@
 
         <div class="container" id="lista_clienti">
             <div class="row">
-                <!-- <div class="col col-4">Gianfranco</div>
-                <div class="col col-4">Frizzi</div>
-                <div class="col col-4">gianfranco_frizzi_98@gmail.com</div> -->
+                <!-- <div class="col col-4 ">Gianfranco</div>
+                <div class="col col-4 ">Frizzi</div>
+                <div class="col col-4 ">gianfranco_frizzi_98@gmail.com</div> -->
             </div>
         </div>
         <div class="col col-12" id="clienti_trovati">
@@ -150,13 +178,13 @@
 
     </div>
 
-    <div class="container nascosto" id="tab-cassa">
+    <div class="container nascosto " id="tab-cassa">
 
-        <div class="row">
-            <div class="col col-8"><span class="breadcrumb">Ti trovi in: Cassa</span></div>
-            <div class="col-4 col">
-                <form style="margin-top:22px" name="form_page" _lpchecked="1">
-                    <input type="text" placeholder="Cerca Pratica" class="form-control" id="ricercaPraticaInput" onkeyup="cercaPratica()">
+        <div class="row ">
+            <div class="col col-8 "><span class="breadcrumb ">Ti trovi in: Cassa</span></div>
+            <div class="col-4 col ">
+                <form style="margin-top:22px" name="form_page " _lpchecked="1 ">
+                    <input type="text" placeholder="Cerca Pratica" class="form-control " id="ricercaPraticaInput" onkeyup="cercaPratica() ">
                 </form>
             </div>
 
@@ -169,33 +197,34 @@
             <div class="col-2 h4">TOT</div>
             <div class="col-1 h4">Rimuovi</div>
         </div>
-        <div class="row" id="placeHolder">
+        <div class="row " id="placeHolder">
             <div class="col-3"></div>
             <div class="col-3"></div>
             <div class="col-3"></div>
             <div class="col-2"></div>
             <div class="col-1"></div>
         </div>
-        <div class="col col-12" id="lista_cassa">
+        <div class="col col-12 " id="lista_cassa">
         </div>
     </div>
 
-    <div class="container nascosto" id="tab-garage">
-        <span class="breadcrumb">Ti trovi in: Garage</span>
-        <span class="descrizione">Visualizza le auto disponibili nel nostro garage</span>
-        <div class="container distanziatoreSociale mt-4 mb-4"></div>
-        <div class="row">
-            <div class="col col-12">
+    <div class="container nascosto " id="tab-garage">
+        <span class="breadcrumb ">Ti trovi in: Garage</span>
+        <span class="descrizione ">Visualizza le auto disponibili nel nostro garage</span>
+        <div class="container distanziatoreSociale mt-4 mb-4 "></div>
+        <div class="row ">
+            <div class="col col-12 ">
                 <!--*********************************** Esempio Di Select 2 *********************************** -->
-
-                <select class="js-example-basic-single" name="marche" id="marche" onchange="fillModelli(this)">
+                <span>Il nostro parco auto è di :  </span><span id="tot-auto">10</span><span> macchine</span><br>
+                <span style="display: inline-block;margin:10px 0px"> Macchine attualmente affittate :</span> <span id="auto-prenotate">2</span><br>
+                <select class="js-example-basic-single" name="marche" id="marche" onchange="fillModelli(this) ">
                 </select>
             </div>
         </div>
-        <div class="row">
-            <div class="col col-12">
+        <div class="row ">
+            <div class="col col-12 ">
                 <select class="js-example-basic-single" name="modelli" id="modelli">
-                    <option value="">Nessun modello selezionato</option>
+                    <option value=" ">Nessun modello selezionato</option>
                 </select>
             </div>
         </div>

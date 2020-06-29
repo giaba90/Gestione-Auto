@@ -4,7 +4,7 @@ function popolaListaCassa() {
     let tag = '';
     console.log('popolaListaCassa()');
     ListaCassa.array.forEach(elemento => {
-        console.log(elemento);
+        //console.log(elemento);
         tag += `<div class="row mb-2">
                     <div class="col-3">${elemento.affitto.email}</div>
                     <div class="col-3">${new Date(elemento.dataFineAffitto).toDateString()}</div>
@@ -32,8 +32,9 @@ function getPrezzoFinale(dataInizio, dataFineAffitto, costoGiornaliero) {
      */
     dataInizio = new Date(dataInizio);
     dataFineAffitto = new Date(dataFineAffitto);
-    console.log(dataInizio, dataFineAffitto, costoGiornaliero);
+    //console.log(dataInizio, dataFineAffitto, costoGiornaliero);
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-    const diffDays = Math.round(Math.abs((dataInizio - dataFineAffitto) / oneDay));
+    let diffDays = Math.round(Math.abs((dataInizio - dataFineAffitto) / oneDay));
+    if (diffDays <= 0) diffDays = 1;
     return (costoGiornaliero * diffDays);
 }

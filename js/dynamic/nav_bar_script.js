@@ -7,7 +7,7 @@ function onClickOfTab(event) {
             if (a !== event.currentTarget) {
                 a.classList.remove("active");
                 let id = getIdFromHref(a);
-                //console.log(id);
+                console.log(id);
                 document.querySelector(id).classList.add("nascosto");
             }
         }
@@ -19,6 +19,7 @@ function onClickOfTab(event) {
 function getIdFromHref(a) {
     for (element of a.href.split("/")) {
         if (element.includes("#")) {
+            console.log(element);
             let array = element.split("#");
             return "#" + array[array.length - 1];
         }

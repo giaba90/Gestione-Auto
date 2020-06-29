@@ -2,7 +2,7 @@ const formClienti = document.forms["formClienti"];
 
 function nuovoCliente() {
     // Get the modal
-    var modal = document.getElementById("myModal");
+    var modal = document.getElementById("myModalClienti");
 
     // Get the button that opens the modal
     var btn = document.getElementById("myBtn");
@@ -28,21 +28,26 @@ function nuovoCliente() {
 
 function controllaSubmit() {
     let nome = formClienti.nome.value;
+    let cognome = formClienti.cognome.value;
     let email = formClienti.email.value;
-    if (nome === "" || email === "" && nome.includes(" ")) {
+    nome += (" " + cognome);
+    //&& nome.includes(" ")
+    if (nome === "" || email === "" || cognome === "") {
         alert("Campi Vuoti o mal Compilati!");
         return false;
-    } else { //Controllo su email (dev'essere diversa da quelle già esistenti)
-        ListaClienti.array.forEach(element => {
-            if (email == element.mail) console.log("Email già registrata");
-            //Alert Email già registrata + return false
-        })
+    } else {
+        if (ListaClienti.checkEmailIfPresent(email)) {
+            alert("Email già registrata");
+            return false;
+        } else {
+            alert("Cliente inserito correttamente!");
+            ListaClienti.insert(new Cliente(nome, email));
+        }
     }
     //Obbligare l'inserimento dello spazio tra nome e cognome oppure creare...
     //... anche il campo cognome e aggiungerlo al nome
 
-    alert("Cliente inserito correttamente!");
-    ListaClienti.insert(new Cliente(nome, email));
+
 }
 
 
@@ -88,8 +93,12 @@ function cercaCliente() {
                     <div class="col-1"><button class="btn btn-danger" onclick="cancellaCliente('${elemento.mail})'">X</button></div>
                 </div>`;
                 clientiTrovati.innerHTML = clienteTrovato;
-
+            } else {
+                if (clienteTrovato == '') {
+                    clientiTrovati.innerHTML = '';
+                }
             }
+
         });
     } else {
         document.getElementById('lista_clienti').style.display = ('block');

@@ -4,22 +4,13 @@ ListaUser.initialize();
 
 
 function Controlla() {
-    let esito = (new RegExp('@')).test(questionario.email.value);
-    if (questionario.email.value.length == 0 ||
-        questionario.password.value.length == 0 ||
-        questionario.c_password.value.length == 0
-    ) {
-        alert("Compilare tutti i campi!");
-        return false;
-    } else if (!esito) {
-        alert("Email Non valida!");
-        return false;
-    } else if (!(questionario.password.value === questionario.c_password.value)) {
+    if (!(questionario.password.value === questionario.c_password.value)) {
         alert("Password non corrispondenti!");
         return false;
     }
-    questionario.password.value = questionario.c_password.value = sha256(questionario.password.value);
-    let object = { "email": questionario.email.value, "password": questionario.password.value };
+    let password = sha256(questionario.password.value);
+    let select = document.getElementById("selectAdmin");
+    let object = { "email": questionario.email.value, "password": password, "admin": select.value };
     if (!LS.checkEmailIfPresent(object)) {
         ListaUser.insert(object);
         console.log(ListaUser);

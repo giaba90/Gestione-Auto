@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
-    <script src="js/statico/const.js" />
+    <script src="js/statico/const.js"></script>
     <script src="js/dynamic/login_script.js" defer></script>
     <title>Login</title>
 </head>
@@ -21,18 +21,19 @@
                 <form action="index.html" method="POST" onsubmit="return Login()" name="form_page" accept-charset="UTF-8">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" name="email" aria-describedby="email" placeholder="Enter email">
+                        <input required type="email" class="form-control" name="email" aria-describedby="email" placeholder="Enter email">
                         <small id="email" class="form-text text-muted">We'll never share your email with anyone
                             else.</small>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input required type="password" class="form-control" name="password" placeholder="Password">
                     </div>
                     <div class="form-group">
                         <label for="exampleSelect">Tipologia</label>
-                        <select class="form-control">
+                        <select class="form-control" id="selectAdmin">
                             <option value="1">Admin</option>
+                            <option value="0">User</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

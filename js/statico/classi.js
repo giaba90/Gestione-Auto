@@ -40,15 +40,18 @@ class Cliente {
 }
 
 class Affitto {
-    constructor(id, email, nomeCliente, marca, modello, dataInizio) {
+    constructor(id, email, nomeCliente, marca, modello, marcaId, modelloId, dataInizio) {
         this.id = id;
         this.email = email;
         this.nomeCliente = nomeCliente;
         this.marca = marca;
         this.modello = modello;
+        this.marcaId = marcaId;
+        this.modelloId = modelloId;
         this.costoGiornaliero = 40;
         this.dataInizio = dataInizio;
     }
+
     getId() {
         return this.id;
     }
@@ -81,11 +84,25 @@ class Marca {
     }
 
     getModello(id) {
-        for (modello of this.arrayModelli) {
-            if (modello.id === id) {
-                return modello;
+            for (modello of this.arrayModelli) {
+                if (modello.id === id) {
+                    return modello;
+                }
             }
         }
+        //mi da il numero di modelli per ogni marca
+    getAllModelNumber() {
+        return this.arrayModelli.length;
+    }
+
+    getModellAffittatiNumber() {
+        let n = 0;
+        for (m of this.arrayModelli) {
+            if (m.affittata) {
+                n++;
+            }
+        }
+        return n;
     }
 }
 
@@ -93,6 +110,11 @@ class Modello {
     constructor(name, id) {
         this.name = name;
         this.id = id;
+        this.affittata = false;
+    }
+
+    setAffitto(bool) {
+        this.affittata = bool;
     }
 }
 

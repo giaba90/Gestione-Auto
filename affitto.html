@@ -6,20 +6,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
     <link rel="stylesheet" href="./css/style.css">
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <!-- lo aggiunto per la lingua del calendario -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.9/i18n/datepicker.it-IT.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
     <script src="./js/statico/classi.js"></script>
     <script src="./js/statico/const.js"></script>
     <script src="./js/statico/api.js"></script>
     <!-- Dynamico -->
     <script src="./js/dynamic/onLoad_script.js" defer></script>
+    <script src="./js/dynamic/cookieCheck.js"></script>
     <!-- Dinamico Riferito alle tab -->
     <script src="./js/dynamic/tab/garage_script.js" defer></script>
     <script src="./js/dynamic/affitto_script.js" defer></script>
@@ -43,45 +43,57 @@
         </div>
         <div class="container" id="tab-garage">
             <div class="row">
-                <div class="col-3">
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="marca">Marca</label>
-                            <div class="form-control" id="div_marca">
-                                <select class="js-example-basic-single" name="marche" id="marche" onchange="fillModelli(this)">
-                                </select>
+                <div class="col">
+                    <form action="index.html" method="POST" onsubmit="return aggiungiAffitto()">
+                        <div class=" row">
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="marca">Marca</label>
+                                        <div class="form-control" id="div_marca">
+                                            <select class="js-example-basic-single" name="marche" id="marche" onchange="fillModelli(this)" required>
+                                    </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="cliente">Cliente</label>
+                                        <div class="form-control" id="div_cliente">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="cliente">Cliente</label>
-                            <div class="form-control" id="div_cliente">
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="modelli">Modello</label>
+                                        <div class="form-control">
+                                            <select id="modelli" required>
+                                        <option value=" " disabled selected>Nessun modello selezionato</option>
+                                    </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group ">
+                                        <label for="data">Data affitto</label>
+                                        <br>
+                                        <!-- Per prendere il valore dataScelta = document.getElementsByName('dataaffitto')[0].value -->
+                                        <input type="text" id="datepicker" name="dataaffitto"><i class="far fa-calendar-alt"></i>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="modelli">Modello</label>
-                            <div class="form-control">
-                                <select id="modelli">
-                                    <option value="">Nessun modello selezionato</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="data">Data affitto</label>
-                            <br>
-                            <!-- Per prendere il valore dataScelta = document.getElementsByName('dataaffitto')[0].value -->
-                            <input type="text" id="datepicker" name="dataaffitto"><i class="far fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="button" class="btn btn-secondary" onclick="goBack()" value="Torna indietro">
+                                        <input type="submit" class="btn btn-success" value="Aggiungi">
 
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

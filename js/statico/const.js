@@ -60,6 +60,50 @@ const ListaClienti = {
         });
         LS.saveClienti();
     },
+
+    setAffittoAttivo(mail, affitto) {
+        for (cliente of ListaClienti.array) {
+            if (cliente.mail == mail) {
+                cliente.affitto = affitto;
+            }
+        }
+        LS.saveClienti();
+    },
+
+    checkAffittoAttivo(mail) {
+        for (cliente of ListaClienti.array) {
+            if (cliente.mail === mail) {
+                if (cliente.affitto === undefined) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    },
+
+    removeAffittoAttivo(mail) {
+        for (cliente of ListaClienti.array) {
+            if (cliente.mail == mail) {
+                cliente.affitto = undefined;
+            }
+        }
+        LS.saveClienti();
+    },
+
+    checkEmailIfPresent: (mail) => {
+        let boolean = false;
+        if (ListaClienti.array !== null) {
+            for (elemento of ListaClienti.array) {
+                // console.log(`${mail} === ${elemento.mail} ? ${mail === elemento.mail}`);
+                if (mail === elemento.mail) {
+                    boolean = true;
+                }
+            }
+        }
+        return boolean;
+    },
+
 };
 
 const ListaAffitti = {
@@ -82,8 +126,27 @@ const ListaAffitti = {
     },
 
     remove: (id) => {
+        let affitto;
         ListaAffitti.array = ListaAffitti.array.filter((elemento) => {
-            //console.log(elemento);
+            if (elemento.id === id) {
+                affitto = elemento;
+                console.log(affitto);
+            }
+            return elemento.id !== id
+        });
+        console.log(ListaAffitti.array);
+        ListaClienti.removeAffittoAttivo(affitto.email);
+        ListaGarage.removeAffitata(affitto.marcaId, affitto.modelloId);
+        LS.saveAffitti();
+    },
+
+    sposta: (id) => {
+        let affitto;
+        ListaAffitti.array = ListaAffitti.array.filter((elemento) => {
+            if (elemento.id === id) {
+                affitto = elemento;
+                console.log(affitto);
+            }
             return elemento.id !== id
         });
         LS.saveAffitti();
@@ -129,6 +192,36 @@ const ListaGarage = {
         });
         LS.saveGarage();
     },
+
+    setAffitata(marcaId, modelloId) {
+        ListaGarage.array.forEach((marca) => {
+            console.log(marca);
+            console.log(marcaId);
+            if (marca.id == marcaId) {
+                for (modello of marca.arrayModelli) {
+                    console.log(modello);
+                    if (modello.id == modelloId) {
+                        console.log("Set Affittata true");
+                        modello.affittata = true;
+                    }
+                }
+            }
+        });
+        LS.saveGarage();
+    },
+
+    removeAffitata(marcaId, modelloId) {
+        ListaGarage.array.forEach((marca) => {
+            if (marca.id == marcaId) {
+                for (modello of marca.arrayModelli) {
+                    if (modello.id == modelloId) {
+                        modello.affittata = false;
+                    }
+                }
+            }
+        });
+        LS.saveGarage();
+    }
 };
 
 const ListaCassa = {
@@ -149,9 +242,15 @@ const ListaCassa = {
     },
 
     remove: (id) => {
+        let affitto;
         ListaCassa.array = ListaCassa.array.filter((elemento) => {
+            if (elemento.id === id) {
+                affitto = elemento;
+            }
             return elemento.id !== id
         });
+        ListaClienti.removeAffittoAttivo(affitto.email);
+        ListaGarage.removeAffitata(affitto.marcaId, affitto.modelloId);
         LS.saveCassa();
     },
 
@@ -191,8 +290,9 @@ const LS = {
         let boolean = false;
         if (LS.getUser() !== null) {
             LS.getUser().forEach((elemento) => {
-                if (ele.email === elemento.email && ele.password === elemento.password) {
-                    // console.log(`${ele.email} === ${elemento.email} ? ${ele.email === elemento.email} && ${ele.password} === ${elemento.password}? ${ele.password === elemento.password}`);
+                if (ele.email === elemento.email && ele.password === elemento.password && ele.admin === ele.admin) {
+                    //${ele.email} === ${elemento.email} ? ${ele.email === elemento.email} && ${ele.password} === ${elemento.password}? ${ele.password === elemento.password} && 
+                    console.log(`${ele.admin} === ${elemento.admin}`);
                     boolean = true;
                 }
             })
@@ -234,6 +334,14 @@ const LS = {
     saveCassa: () => {
         database.setItem(LS.databaseKeyForCassa, ListaCassa.json());
     },
+
+    deleteEveryThing: () => {
+        database.removeItem(LS.databaseKeyForCassa);
+        database.removeItem(LS.databaseKeyForGarage);
+        database.removeItem(LS.databaseKeyForAffitti);
+        database.removeItem(LS.databaseKeyForClienti);
+        database.removeItem(LS.databaseKeyForUser);
+    }
 };
 
 const Cookie = {
@@ -243,6 +351,10 @@ const Cookie = {
         d.setTime(d.getTime() + (numberOfDay * 24 * 60 * 60 * 1000));
         var expires = "expires=" + d.toUTCString();
         document.cookie = cookieName + "=" + JSON.stringify(cookieValue) + ";" + expires + ";path=/; SameSite=None; Secure";
+    },
+
+    removeCoockies: () => {
+        document.cookie = cookieName + "=" + ";expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; Secure";
     },
 
     getCookie: (cookieName) => {
