@@ -147,7 +147,7 @@ const ListaAffitti = {
                 affitto = elemento;
                 console.log(affitto);
             }
-            return elemento.id !== id
+            return elemento.id !== id;
         });
         LS.saveAffitti();
     },
